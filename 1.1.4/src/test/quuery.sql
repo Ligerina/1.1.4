@@ -1,0 +1,1 @@
+insert into new_table (name,lastname,age) values ('Anton','Sukhankin','22')
