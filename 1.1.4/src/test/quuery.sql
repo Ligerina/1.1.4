@@ -1,1 +1,1 @@
-insert into new_table (name,lastname,age) values ('Anton','Sukhankin','22')
+insert into mydbtest.table_name (name,lastname,age) values ('Anton','Sukhankin','22')
