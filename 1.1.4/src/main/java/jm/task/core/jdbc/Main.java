@@ -13,19 +13,15 @@ public class Main {
 
     public static void main(String[] args) {
         UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
-//        userDaoJDBC.createUsersTable();
-//        userDaoJDBC.saveUser("Anton1","Sukhankin", (byte) 22);
-//        userDaoJDBC.saveUser("Anton2","Sukhankin", (byte) 22);
-//        userDaoJDBC.saveUser("Anton3","Sukhankin", (byte) 22);
-//        userDaoJDBC.saveUser("Anton4","Sukhankin", (byte) 22);
-//        userDaoJDBC.dropUsersTable();
-
+        userDaoJDBC.createUsersTable();
+        userDaoJDBC.saveUser("Anton", "Sukhankin", (byte) 22);
+        userDaoJDBC.saveUser("Geralt", "of Rivia", (byte) 100);
+        userDaoJDBC.saveUser("Yennefer", "of Vengerberg", (byte) 95);
+        userDaoJDBC.saveUser("Yarpen", "Zigrin", (byte) 42);
         List<User> list = userDaoJDBC.getAllUsers();
         System.out.println(list);
-        System.out.println("");
-        System.out.println("amount: " + list.size());
-
-//        userDaoJDBC.removeUserById(3);
+        userDaoJDBC.cleanUsersTable();
+        userDaoJDBC.dropUsersTable();
 
     }
 
