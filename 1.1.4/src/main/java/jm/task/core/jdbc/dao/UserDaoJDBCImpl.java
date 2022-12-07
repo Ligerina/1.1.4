@@ -10,7 +10,6 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
 
     private String query;
-    Connection connection = Util.connect();
     Statement statement;
 
     public UserDaoJDBCImpl() {
@@ -27,7 +26,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 "    constraint schema_name_pk\n" +
                 "        primary key (id)\n" +
                 ");\n";
-        try {
+        try (Connection connection = Util.connect()){
             statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
@@ -38,7 +37,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         query = "drop table if exists schema_name.user_table;";
-        try {
+        try (Connection connection = Util.connect()){
             statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
@@ -48,7 +47,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         query = "insert into schema_name.user_table (name,lastName,age) values (?,?,?)";
-        try {
+        try (Connection connection = Util.connect()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -62,7 +61,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         query = "delete from schema_name.user_table where id=?";
-        try {
+        try (Connection connection = Util.connect()){
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
@@ -74,7 +73,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         query = "SELECT * FROM schema_name.user_table";
         List<User> listOfUsers = new ArrayList<>();
-        try {
+        try (Connection connection = Util.connect()) {
             statement = connection.createStatement();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 //            preparedStatement.setString(1,TABLE_NAME);
@@ -94,7 +93,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         query = "DELETE FROM schema_name.user_table";
-        try {
+        try (Connection connection = Util.connect()){
             statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
