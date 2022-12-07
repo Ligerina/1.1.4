@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-
     private String query;
     Statement statement;
 
@@ -30,7 +29,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
-            throw new RuntimeException("Не удалось создать таблицу или создать statement");
+            System.err.println("Не удалось создать таблицу или создать statement");
         }
 
     }
@@ -41,7 +40,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
-            throw new RuntimeException("Не удалось удалить таблицу ");
+            System.err.println("Не удалось удалить таблицу");
         }
     }
 
@@ -55,7 +54,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.execute();
             System.out.println("User с именем - " + name + " добавлен в БД");
         } catch (SQLException e) {
-            throw new RuntimeException("Не удалось добавить нового человека ");
+            System.err.println("Не удалось добавить нового человека");
         }
     }
 
@@ -66,7 +65,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Не удалось удалить пользователя по id");
         }
     }
 
@@ -86,7 +85,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 listOfUsers.add(user);
             }
         } catch (SQLException e) {
-            System.err.print(e.getMessage());
+            System.err.print("Не удалось получить всех пользователей");
         }
         return listOfUsers;
     }
@@ -97,7 +96,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.err.println("Не удалось удалить всех пользователей из таблицы");
         }
     }
 }
