@@ -28,6 +28,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.connect()){
             statement = connection.createStatement();
             statement.execute(query);
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("Не удалось создать таблицу или создать statement");
         }
@@ -52,6 +53,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.execute();
+            connection.commit();
             System.out.println("User с именем - " + name + " добавлен в БД");
         } catch (SQLException e) {
             System.err.println("Не удалось добавить нового человека");
@@ -64,6 +66,7 @@ public class UserDaoJDBCImpl implements UserDao {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
+            connection.rollback();
         } catch (SQLException e) {
             System.err.println("Не удалось удалить пользователя по id");
         }
@@ -75,7 +78,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.connect()) {
             statement = connection.createStatement();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-//            preparedStatement.setString(1,TABLE_NAME);
             ResultSet res = preparedStatement.executeQuery();
             while (res.next()) {
                 String name = res.getString("name");
@@ -95,6 +97,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.connect()){
             statement = connection.createStatement();
             statement.execute(query);
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("Не удалось удалить всех пользователей из таблицы");
         }

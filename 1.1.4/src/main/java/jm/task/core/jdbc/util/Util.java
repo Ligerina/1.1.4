@@ -16,6 +16,7 @@ public class Util {
             Driver driver = new com.mysql.jdbc.Driver();
             DriverManager.registerDriver(driver);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection.setAutoCommit(false);
             return connection;
         } catch (java.sql.SQLException sqlException) {
             System.err.println("Не удалось подключиться к БД ");
