@@ -40,6 +40,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Connection connection = Util.connect()){
             statement = connection.createStatement();
             statement.execute(query);
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("Не удалось удалить таблицу");
         }
@@ -66,7 +67,7 @@ public class UserDaoJDBCImpl implements UserDao {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
-            connection.rollback();
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("Не удалось удалить пользователя по id");
         }
